@@ -1,0 +1,81 @@
+﻿@using ControleFinanceiro.CORE.Resources
+@using SquishIt.Framework
+@using SquishIt.Mvc
+
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        @(Bundle.Css()
+            .Add("/Assets/frameworks/bootstrap/css/bootstrap.css")
+            .Add("/Assets/frameworks/bootstrap/css/bootstrap-responsive.css")
+           .MvcRender(@Url.Content("/Assets/combined_#.css")))
+           
+           
+         @(Bundle.JavaScript()
+            .Add("/Assets/frameworks/main/jquery-1.7.2.js")
+            .Add("/Assets/frameworks/main/jquery-ui-1.8.20.custom.min.js")
+            .Add("/Assets/frameworks/main/jquery.validate.min.js")
+            .Add("/Assets/frameworks/main/modernizr-1.7.min.js")
+            .Add("/Assets/frameworks/bootstrap/js/bootstrap.min.js")
+            .Add("/Assets/frameworks/spin/spin.js")
+            .Add("/Assets/frameworks/offtmp/jquery.offtmp.js")
+            .MvcRender(@Url.Content("/Assets/customScripts/combined_#.js")))
+           
+        @*Adicionando extends para uso global (Verificar  as rotas na classe MvcApplication)*@
+        <script type="text/javascript" src="@Url.Content("/Assets/extends/GlobalExtends.js")"></script>
+        
+        @*Adicionando o arquivo de Resource (Verificar  as rotas na classe MvcApplication)*@
+        <script type="text/javascript" src="@Url.Content("/Assets/resources/GlobalsResource.js")"></script>
+        
+        @*Adicionando o arquivo de Resource (Verificar  as rotas na classe MvcApplication)*@
+        <script type="text/javascript" src="@Url.Content("/Assets/resources/LabelsResource.js")"></script>
+        
+        @*Adicionando o arquivo de Resource (Verificar  as rotas na classe MvcApplication)*@
+        <script type="text/javascript" src="@Url.Content("/Assets/resources/MessagesResource.js")"></script>
+           
+        @(Bundle.JavaScript()
+            .Add("/Assets/customScripts/Global.js")
+            .Add("/Assets/customScripts/Master.js")
+            .Add("/Assets/customScripts/AccountSignIn.js")
+            .MvcRender(@Url.Content("/Assets/customScripts/combined2_#.js")))
+                
+        <title>@GlobalsResource.Copyright</title>
+    </head>
+
+    <body data-spy="scroll" data-target=".subnav" data-offset="50" data-twttr-rendered="true">
+    
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="/Home/Index">@GlobalsResource.ApplicationTitle</a>
+                    @Html.Partial("_LogOnStatusPartial")
+                    <div class="nav-collapse">
+                        @Html.Partial("_UserMenuPartial")
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+        
+        @Html.Partial("_LogOnPartial")
+
+        <div class="container-fluid">
+      
+            @RenderBody()
+       
+            <hr>
+            <footer>
+                <p>@GlobalsResource.Copyright</p>
+            </footer>
+        </div>
+       
+                
+    </body>
+</html>

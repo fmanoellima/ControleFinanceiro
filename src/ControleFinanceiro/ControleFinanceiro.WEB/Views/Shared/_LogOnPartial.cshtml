@@ -1,0 +1,57 @@
+﻿@using ControleFinanceiro.CORE.Resources
+
+<div class="modal hide fade" id="modalLogin">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2>@LabelsResource.AccountSignInTitle</h2>
+        <p>
+            @MessagesResource.AccountSignInMessage
+        </p>
+    </div>
+             
+    <form id="formModalLogOn">
+    <div class="modal-body">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label" for="UserName">@LabelsResource.UserName</label>
+                <div class="controls">
+                    <div class="input-append">
+                        <input class="input-medium" id="UserName" name="UserName" size="16" type="text"/>
+                    </div>
+                </div>
+            </div>
+                    
+            <div class="control-group">
+                <label class="control-label" for="Password">@LabelsResource.Password</label>
+                <div class="controls">
+                    <div class="input-append">
+                        <input class="input-medium" id="Password" name="Password" size="16" type="password"/>
+                    </div>
+                </div>
+            </div>
+                    
+            <div class="control-group">
+                <div class="controls">
+                    <label class="checkbox">
+                        <input type="checkbox" name="RememberMe" id="RememberMe" />
+                        @LabelsResource.RememberMe
+                    </label>
+                </div>
+            </div>
+                    
+            <div class="alert hide fade in" id="AlertLogon">
+                <h4 class="alert-heading" id="AlertLogonTitle"></h4>
+                <span id="AlertLogonMessage"></span>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">@LabelsResource.Cancel</a>
+                <a href="#" class="btn btn-primary" id="btnSignIn" data-loading-text="@LabelsResource.Authenticating" autocomplete="off">@LabelsResource.SignIn</a>
+            </div>
+
+        </fieldset>
+    </div>
+    </form>
+</div>
+    
+    
