@@ -24,8 +24,8 @@ namespace ControleFinanceiro.CORE.Services
 
         public CategoriaService()
         {
-            _feed = ConfigureAplication.Components.Resolve<Feedback>();
-            _repository =  ConfigureAplication.Components.Resolve<UnitOfWork>();
+            _feed = COREConfiguration.Components.Resolve<Feedback>();
+            _repository =  COREConfiguration.Components.Resolve<UnitOfWork>();
         }
 
         #endregion

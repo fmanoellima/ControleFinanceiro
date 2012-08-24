@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using ControleFinanceiro.CORE.Resources;
 using ControleFinanceiro.Helpers;
+using Resources;
 
 namespace ControleFinanceiro.WEB.Controllers
 {
@@ -57,11 +58,15 @@ namespace ControleFinanceiro.WEB.Controllers
             var sbExtends = new StringBuilder();
           
             sbExtends.Append(" $.fn.extend({");
+
             sbExtends.Append(string.Format("appAssetsPath: \"{0}\",",AppHelper.AssetsPath));
-            sbExtends.Append(string.Format(" appRootDomainPath: \"{0}\"", AppHelper.RootDomain));
+            sbExtends.Append(string.Format(" appRootDomainPath: \"{0}\",", AppHelper.RootDomain));
+            sbExtends.Append(string.Format(" appAccountControllerPath: \"{0}{1}/\"", AppHelper.RootDomain,URLResources.AccountController));
+
             sbExtends.Append("  });");
            
             return JavaScript(sbExtends.ToString());
         }
+
     }
 }

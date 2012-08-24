@@ -1,8 +1,4 @@
 ﻿/// <reference path="../jquery-1.7.2.js" />
-$.fn.extend({
-    appAccountControllerPath: $.fn.appRootDomainPath + 'Account/'
-});
-
 $(function () {
 
     $("#btnOpenSignInModal").click(function (e) {

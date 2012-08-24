@@ -1,25 +1,26 @@
 ﻿@using ControleFinanceiro.CORE.Resources
+@using Resources
 
     @if (Request.IsAuthenticated)
     {
 
         <ul class="nav">
-            <li>@Html.ActionLink("Menu1", "Index", "Home")</li>
+            <li>@Html.ActionLink("Menu1", "Index", @URLResources.HomeController)</li>
             <li>
                 <ul class="nav">
-                    <li>@Html.ActionLink("Menu1.1", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Menu1.2", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Menu1.1", "Index", @URLResources.HomeController)</li>
+                    <li>@Html.ActionLink("Menu1.2", "Index", @URLResources.HomeController)</li>
                 </ul>
             </li>
-            <li>@Html.ActionLink("Menu2", "Index", "Home")</li>
+            <li>@Html.ActionLink("Menu2", "Index", @URLResources.HomeController)</li>
         </ul>
     
     }
     else
     {
          <ul class="nav">
-            <li>@Html.ActionLink(LabelsResource.HomeIndex, "Index", "Home")</li>
-            <li>@Html.ActionLink(LabelsResource.About, "About", "Home")</li>
+            <li>@Html.ActionLink(LabelsResource.HomeIndex, "Index", @URLResources.HomeController)</li>
+            <li>@Html.ActionLink(LabelsResource.About, "About", @URLResources.HomeController)</li>
         </ul>
     
     }

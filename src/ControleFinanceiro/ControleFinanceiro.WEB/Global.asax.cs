@@ -21,7 +21,7 @@ namespace ControleFinanceiro.WEB
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            ConfigureAplication.Configure();
+            COREConfiguration.Configure();
 
             ConfigureIOC();
         }

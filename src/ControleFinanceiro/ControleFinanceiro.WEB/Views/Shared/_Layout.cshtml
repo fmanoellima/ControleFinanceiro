@@ -1,4 +1,5 @@
 ﻿@using ControleFinanceiro.CORE.Resources
+@using Resources
 @using SquishIt.Framework
 @using SquishIt.Mvc
 
@@ -15,10 +16,10 @@
            
            
          @(Bundle.JavaScript()
-            .Add("/Assets/frameworks/main/jquery-1.7.2.js")
-            .Add("/Assets/frameworks/main/jquery-ui-1.8.20.custom.min.js")
+            .Add("/Assets/frameworks/main/jquery-1.8.0.min.js")
+            .Add("/Assets/frameworks/main/jquery-ui-1.8.23.min.js")
             .Add("/Assets/frameworks/main/jquery.validate.min.js")
-            .Add("/Assets/frameworks/main/modernizr-1.7.min.js")
+            .Add("/Assets/frameworks/main/modernizr-2.5.3.js")
             .Add("/Assets/frameworks/bootstrap/js/bootstrap.min.js")
             .Add("/Assets/frameworks/spin/spin.js")
             .Add("/Assets/frameworks/offtmp/jquery.offtmp.js")
@@ -55,7 +56,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="/Home/Index">@GlobalsResource.ApplicationTitle</a>
+                    <a class="brand" href="@URLResources.HomeIndex">@GlobalsResource.ApplicationTitle</a>
                     @Html.Partial("_LogOnStatusPartial")
                     <div class="nav-collapse">
                         @Html.Partial("_UserMenuPartial")
