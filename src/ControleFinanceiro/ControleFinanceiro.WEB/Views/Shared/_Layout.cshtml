@@ -9,39 +9,25 @@
         <meta charset="utf-8" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        @(Bundle.Css()
-            .Add("/Assets/frameworks/bootstrap/css/bootstrap.css")
-            .Add("/Assets/frameworks/bootstrap/css/bootstrap-responsive.css")
-           .MvcRender(@Url.Content("/Assets/combined_#.css")))
-           
-           
-         @(Bundle.JavaScript()
-            .Add("/Assets/frameworks/main/jquery-1.8.0.min.js")
-            .Add("/Assets/frameworks/main/jquery-ui-1.8.23.min.js")
-            .Add("/Assets/frameworks/main/jquery.validate.min.js")
-            .Add("/Assets/frameworks/main/modernizr-2.5.3.js")
-            .Add("/Assets/frameworks/bootstrap/js/bootstrap.min.js")
-            .Add("/Assets/frameworks/spin/spin.js")
-            .Add("/Assets/frameworks/offtmp/jquery.offtmp.js")
-            .MvcRender(@Url.Content("/Assets/customScripts/combined_#.js")))
+        
+        @*Verifique os arquivos no Global.asax*@
+        @(Bundle.Css().MvcRenderCachedAssetTag("CombinedCSS"))
+
+        @(Bundle.JavaScript().MvcRenderCachedAssetTag("CombinedJS"))
            
         @*Adicionando extends para uso global (Verificar  as rotas na classe MvcApplication)*@
-        <script type="text/javascript" src="@Url.Content("/Assets/extends/GlobalExtends.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Static/extends/GlobalExtends.js")"></script>
         
         @*Adicionando o arquivo de Resource (Verificar  as rotas na classe MvcApplication)*@
-        <script type="text/javascript" src="@Url.Content("/Assets/resources/GlobalsResource.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Static/resources/GlobalsResource.js")"></script>
         
         @*Adicionando o arquivo de Resource (Verificar  as rotas na classe MvcApplication)*@
-        <script type="text/javascript" src="@Url.Content("/Assets/resources/LabelsResource.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Static/resources/LabelsResource.js")"></script>
         
         @*Adicionando o arquivo de Resource (Verificar  as rotas na classe MvcApplication)*@
-        <script type="text/javascript" src="@Url.Content("/Assets/resources/MessagesResource.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Static/resources/MessagesResource.js")"></script>
            
-        @(Bundle.JavaScript()
-            .Add("/Assets/customScripts/Global.js")
-            .Add("/Assets/customScripts/Master.js")
-            .Add("/Assets/customScripts/AccountSignIn.js")
-            .MvcRender(@Url.Content("/Assets/customScripts/combined2_#.js")))
+        @(Bundle.JavaScript().MvcRenderCachedAssetTag("CombinedJS2"))
                 
         <title>@GlobalsResource.Copyright</title>
     </head>

@@ -16,30 +16,20 @@ namespace ControleFinanceiro.WEB.Controllers
     public class CategoriasController : Controller
     {
         private Feedback _feed;
-        private JsonResult _jresult { get { return _context.Resolve<JsonResult>(); } }
-        private readonly IComponentContext _context;
         private readonly ICategoriaService _service;
         private IValidatorRunner _validationRunner;
 
-         public CategoriasController(IComponentContext context)
-        {
-            _context = context;
-            _service = context.Resolve<ICategoriaService>();
-             _validationRunner = context.Resolve<IValidatorRunner>();
-        }
+        public CategoriasController(ICategoriaService service, IValidatorRunner validationRunner)
+         {
+             _service = service;
+            _validationRunner = validationRunner;
+         }
         
         // GET: /Categorias/
         public ActionResult Index()
         {
             _feed = _service.ListarCategorias();
-            if(_feed.Status == Feedback.TypeFeedback.Success)
-            {
-                ViewBag.Categorias = _feed.Output;
-            }
-            else
-            {
-                ViewBag.Categorias = null;
-            }
+            ViewBag.Categorias = _feed.Status == Feedback.TypeFeedback.Success ? _feed.Output : null;
 
             return View();
         }

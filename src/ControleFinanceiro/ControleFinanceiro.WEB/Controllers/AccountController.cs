@@ -12,7 +12,6 @@ using Autofac;
 
 namespace ControleFinanceiro.WEB.Controllers
 {
-    [CompressFilter]
     public class AccountController : Controller
     {
         #region Propriedades de requisições
@@ -22,7 +21,7 @@ namespace ControleFinanceiro.WEB.Controllers
             get
             {
                 if (!String.IsNullOrEmpty(HttpContext.Request["UserName"]))
-                    return HttpContext.Request["UserName"].ToString();
+                    return HttpContext.Request["UserName"];
 
                 return String.Empty;
             }
@@ -33,7 +32,7 @@ namespace ControleFinanceiro.WEB.Controllers
             get
             {
                 if (!String.IsNullOrEmpty(HttpContext.Request["Password"]))
-                    return HttpContext.Request["Password"].ToString();
+                    return HttpContext.Request["Password"];
 
                 return String.Empty;
             }
@@ -44,7 +43,7 @@ namespace ControleFinanceiro.WEB.Controllers
             get
             {
                 if (!String.IsNullOrEmpty(HttpContext.Request["NewPassword"]))
-                    return HttpContext.Request["NewPassword"].ToString();
+                    return HttpContext.Request["NewPassword"];
 
                 return String.Empty;
             }
@@ -55,7 +54,7 @@ namespace ControleFinanceiro.WEB.Controllers
             get
             {
                 if (!String.IsNullOrEmpty(HttpContext.Request["OldPassword"]))
-                    return HttpContext.Request["OldPassword"].ToString();
+                    return HttpContext.Request["OldPassword"];
 
                 return String.Empty;
             }
@@ -66,7 +65,7 @@ namespace ControleFinanceiro.WEB.Controllers
             get
             {
                 if (!String.IsNullOrEmpty(HttpContext.Request["ConfirmPassword"]))
-                    return HttpContext.Request["ConfirmPassword"].ToString();
+                    return HttpContext.Request["ConfirmPassword"];
 
                 return String.Empty;
             }
@@ -77,7 +76,7 @@ namespace ControleFinanceiro.WEB.Controllers
             get
             {
                 if (!String.IsNullOrEmpty(HttpContext.Request["RememberMe"]))
-                    return bool.Parse(HttpContext.Request["RememberMe"].ToString().ToLower());
+                    return bool.Parse(HttpContext.Request["RememberMe"].ToLower());
 
                 return false;
             }
@@ -88,7 +87,7 @@ namespace ControleFinanceiro.WEB.Controllers
             get
             {
                 if (!String.IsNullOrEmpty(HttpContext.Request["ReturnUrl"]))
-                    return HttpContext.Request["ReturnUrl"].ToString().ToLower();
+                    return HttpContext.Request["ReturnUrl"].ToLower();
 
                 return String.Empty;
             }
@@ -99,7 +98,7 @@ namespace ControleFinanceiro.WEB.Controllers
             get
             {
                 if (!String.IsNullOrEmpty(HttpContext.Request["Email"]))
-                    return HttpContext.Request["Email"].ToString();
+                    return HttpContext.Request["Email"];
 
                 return String.Empty;
             }
@@ -109,18 +108,17 @@ namespace ControleFinanceiro.WEB.Controllers
 
         #region Atributos
 
-        private Feedback _feed;
-        private JsonResult _jresult { get { return _context.Resolve<JsonResult>();}}
-        private IValidatorRunner _validationRunner;
-        private IComponentContext _context;
+        private readonly Feedback _feed;
+        private readonly JsonResult _jResult;
+        private readonly IValidatorRunner _validationRunner;
 
         #endregion
 
-        public AccountController(IComponentContext context)
+        public AccountController(JsonResult jResult, IValidatorRunner validationRunner, Feedback feed)
         {
-            _context = context;
-            _validationRunner = context.Resolve<IValidatorRunner>();
-            _feed = new Feedback();
+            _validationRunner = validationRunner;
+            _feed = feed;
+            _jResult = jResult;
         }
 
         // GET: /Account/LogOn
@@ -229,8 +227,8 @@ namespace ControleFinanceiro.WEB.Controllers
                 _feed.Message.Add(error.Message);
             }
 
-            _jresult.Data = _feed;
-            return _jresult;
+            _jResult.Data = _feed;
+            return _jResult;
         }
 
         public JsonResult RegisterUserAjax()
@@ -274,8 +272,8 @@ namespace ControleFinanceiro.WEB.Controllers
                 _feed.Message.Add(error.Message);
             }
 
-            _jresult.Data = _feed;
-            return _jresult;
+            _jResult.Data = _feed;
+            return _jResult;
         }
 
         [Authorize]
@@ -294,7 +292,7 @@ namespace ControleFinanceiro.WEB.Controllers
                 if (_validationRunner.IsValid(model))
                 {
                     MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
-                    bool changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                    bool changePasswordSucceeded = currentUser != null && currentUser.ChangePassword(model.OldPassword, model.NewPassword);
 
                     if (changePasswordSucceeded)
                     {
@@ -320,8 +318,8 @@ namespace ControleFinanceiro.WEB.Controllers
                 _feed.Message.Add(error.Message);
             }
 
-            _jresult.Data = _feed;
-            return _jresult;
+            _jResult.Data = _feed;
+            return _jResult;
 
         }
 
@@ -342,8 +340,8 @@ namespace ControleFinanceiro.WEB.Controllers
                 _feed.Message.Add(error.Message);
             }
 
-            _jresult.Data = _feed;
-            return _jresult;
+            _jResult.Data = _feed;
+            return _jResult;
         }
 
         public JsonResult GetRegisterValidationRules()
@@ -362,8 +360,8 @@ namespace ControleFinanceiro.WEB.Controllers
                 _feed.Message.Add(error.Message);
             }
 
-            _jresult.Data = _feed;
-            return _jresult;
+            _jResult.Data = _feed;
+            return _jResult;
         }
 
         [Authorize]
@@ -382,8 +380,8 @@ namespace ControleFinanceiro.WEB.Controllers
                 _feed.Message.Add(error.Message);
             }
 
-            _jresult.Data = _feed;
-            return _jresult;
+            _jResult.Data = _feed;
+            return _jResult;
         }
 
 

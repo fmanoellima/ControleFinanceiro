@@ -122,7 +122,7 @@ namespace ControleFinanceiro.Helpers
 
                 case "Castle.Components.Validator.Validators.GuidValidator":
                     {
-                        var regExp = @"^(\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\}{0,1})$";
+                        const string regExp = @"^(\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\}{0,1})$";
                         var jsonRegExp = regExp.ConvertToJSON();
                         var errorMessage = ((GuidValidator)(obj)).ErrorMessage;
                         Rules.Add(new ValidationRule(Validate.Regex, errorMessage, jsonRegExp));

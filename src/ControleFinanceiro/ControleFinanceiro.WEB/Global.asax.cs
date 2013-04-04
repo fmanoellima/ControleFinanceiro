@@ -6,8 +6,11 @@ using Autofac;
 using Autofac.Integration.Mvc;
 using Castle.Components.Validator;
 using ControleFinanceiro.CORE;
+using ControleFinanceiro.CORE.Components;
 using ControleFinanceiro.CORE.Services;
 using ControleFinanceiro.CORE.Services.Impl;
+using ControleFinanceiro.WEB.Attributes;
+using SquishIt.Framework;
 
 namespace ControleFinanceiro.WEB
 {
@@ -21,8 +24,8 @@ namespace ControleFinanceiro.WEB
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
+            ConfigureSquishit();
             COREConfiguration.Configure();
-
             ConfigureIOC();
         }
 
@@ -57,6 +60,9 @@ namespace ControleFinanceiro.WEB
 
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            filters.Add(new RequireAuthenticationFilterAttribute());
+            filters.Add(new CompressFilterAttribute());
+            filters.Add(new CacheFilterAttribute());
             filters.Add(new HandleErrorAttribute());
         }
 
@@ -67,13 +73,13 @@ namespace ControleFinanceiro.WEB
 
             routes.MapRoute(
                "Resources", // Route name
-               "Assets/resources/{resxFileName}.js", // URL with parameters
+               "Static/resources/{resxFileName}.js", // URL with parameters
                new { controller = "Resources", action = "GetResourcesJavaScript" } // Parameter defaults
            );
 
             routes.MapRoute(
                "Extends", // Route name
-               "Assets/extends/{extFileName}.js", // URL with parameters
+               "Static/extends/{extFileName}.js", // URL with parameters
                new { controller = "Resources", action = "GetCustomExtends" } // Parameter defaults
            );
 
@@ -82,8 +88,6 @@ namespace ControleFinanceiro.WEB
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
-
-
 
         }
 
@@ -97,14 +101,44 @@ namespace ControleFinanceiro.WEB
             builder.RegisterType<ValidatorRunner>().As<IValidatorRunner>().SingleInstance();
             builder.RegisterType<CachedValidationRegistry>().As<IValidatorRegistry>().SingleInstance();
             builder.Register<JsonResult>(j => new JsonResult()).InstancePerHttpRequest();
+            builder.Register(u => new Feedback()).InstancePerDependency();
 
             builder.RegisterType<CategoriaService>().As<ICategoriaService>();
-            
+
             builder.RegisterModule(new AutofacWebTypesModule());
             builder.RegisterSource(new ViewRegistrationSource());
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+        }
+
+        private void ConfigureSquishit()
+        {
+
+            Bundle.Css()
+               .Add("~/Assets/frameworks/bootstrap/css/bootstrap.css")
+               .Add("~/Assets/frameworks/bootstrap/css/bootstrap-responsive.css")
+               .ForceRelease()
+               .AsCached("CombinedCSS", "~/Assets/Css/CombinedCSS");
+
+
+            Bundle.JavaScript()
+                .Add("~/Assets/frameworks/main/jquery-1.8.0.min.js")
+                .Add("~/Assets/frameworks/main/jquery-ui-1.8.23.min.js")
+                .Add("~/Assets/frameworks/main/jquery.validate.min.js")
+                .Add("~/Assets/frameworks/main/modernizr-2.5.3.js")
+                .Add("~/Assets/frameworks/bootstrap/js/bootstrap.min.js")
+                .Add("~/Assets/frameworks/spin/spin.js")
+                .Add("~/Assets/frameworks/offtmp/jquery.offtmp.js")
+                .ForceRelease()
+                .AsCached("CombinedJS", "~/Assets/Js/CombinedJS");
+            
+            Bundle.JavaScript()
+                .Add("/Assets/customScripts/Global.js")
+                .Add("/Assets/customScripts/Master.js")
+                .Add("/Assets/customScripts/AccountSignIn.js")
+                .ForceRelease()
+                .AsCached("CombinedJS2", "~/Assets/Js/CombinedJS2");
         }
 
         #endregion

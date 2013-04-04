@@ -21,7 +21,6 @@ namespace ControleFinanceiro.CORE
             //Mapeando as Entidades para Modelos
             ModelMapping();
 
-
             ConfigureIOC();
         }
       

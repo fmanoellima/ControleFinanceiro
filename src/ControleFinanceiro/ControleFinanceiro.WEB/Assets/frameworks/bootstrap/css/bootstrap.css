@@ -2761,7 +2761,7 @@ button.close {
 
 .btn-primary:active,
 .btn-primary.active {
-  background-color: #004099 \9;
+  background-color: #004099;
 }
 
 .btn-warning {

@@ -8,27 +8,21 @@ namespace ControleFinanceiro.WEB.Attributes
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            HttpResponseBase response = filterContext.HttpContext.Response;
+            var encodingsAccepted = filterContext.HttpContext.Request.Headers["Accept-Encoding"];
+            if (string.IsNullOrEmpty(encodingsAccepted)) return;
 
-            if (response.Filter is GZipStream || response.Filter is DeflateStream) return;
+            encodingsAccepted = encodingsAccepted.ToLowerInvariant();
+            var response = filterContext.HttpContext.Response;
 
-            HttpRequestBase request = filterContext.HttpContext.Request;
-
-            string acceptEncoding = request.Headers["Accept-Encoding"];
-
-            if (string.IsNullOrEmpty(acceptEncoding)) return;
-
-            acceptEncoding = acceptEncoding.ToLower();
-
-            if (acceptEncoding.Contains("gzip"))
-            {
-                response.AppendHeader("Content-encoding", "gzip");
-                response.Filter = new GZipStream(response.Filter, CompressionMode.Compress);
-            }
-            else if (acceptEncoding.Contains("deflate"))
+            if (encodingsAccepted.Contains("deflate"))
             {
                 response.AppendHeader("Content-encoding", "deflate");
                 response.Filter = new DeflateStream(response.Filter, CompressionMode.Compress);
+            }
+            else if (encodingsAccepted.Contains("gzip"))
+            {
+                response.AppendHeader("Content-encoding", "gzip");
+                response.Filter = new GZipStream(response.Filter, CompressionMode.Compress);
             }
         }
     }

@@ -9,7 +9,6 @@ namespace ControleFinanceiro.WEB.Controllers
             return View();
         }
 
-        [Authorize]
         public ActionResult About()
         {
             return View();

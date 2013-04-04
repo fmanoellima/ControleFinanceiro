@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleFinanceiro.WEB", "ControleFinanceiro.WEB\ControleFinanceiro.WEB.csproj", "{DA8BDA59-7B36-4769-A940-0806C8B6AF2F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleFinanceiro.DAL", "ControleFinanceiro.DAL\ControleFinanceiro.DAL.csproj", "{22C559D3-4FF0-4BA6-B2EE-E4F74C5410FF}"

@@ -15,8 +15,8 @@ namespace ControleFinanceiro.CORE.Services
 
         #region Private fields
 
-        private readonly Feedback _feed;
-        private readonly UnitOfWork _repository;
+        private Feedback _feed;
+        private UnitOfWork _repository;
 
         #endregion
 
@@ -25,7 +25,7 @@ namespace ControleFinanceiro.CORE.Services
         public CategoriaService()
         {
             _feed = COREConfiguration.Components.Resolve<Feedback>();
-            _repository =  COREConfiguration.Components.Resolve<UnitOfWork>();
+            _repository = COREConfiguration.Components.Resolve<UnitOfWork>();
         }
 
         #endregion
