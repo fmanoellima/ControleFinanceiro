@@ -12,21 +12,7 @@
         
         @*Verifique os arquivos no Global.asax*@
         @(Bundle.Css().MvcRenderCachedAssetTag("CombinedCSS"))
-
         @(Bundle.JavaScript().MvcRenderCachedAssetTag("CombinedJS"))
-           
-        @*Adicionando extends para uso global (Verificar  as rotas na classe MvcApplication)*@
-        <script type="text/javascript" src="@Url.Content("~/Static/extends/GlobalExtends.js")"></script>
-        
-        @*Adicionando o arquivo de Resource (Verificar  as rotas na classe MvcApplication)*@
-        <script type="text/javascript" src="@Url.Content("~/Static/resources/GlobalsResource.js")"></script>
-        
-        @*Adicionando o arquivo de Resource (Verificar  as rotas na classe MvcApplication)*@
-        <script type="text/javascript" src="@Url.Content("~/Static/resources/LabelsResource.js")"></script>
-        
-        @*Adicionando o arquivo de Resource (Verificar  as rotas na classe MvcApplication)*@
-        <script type="text/javascript" src="@Url.Content("~/Static/resources/MessagesResource.js")"></script>
-           
         @(Bundle.JavaScript().MvcRenderCachedAssetTag("CombinedJS2"))
                 
         <title>@GlobalsResource.Copyright</title>

@@ -100,13 +100,13 @@ namespace ControleFinanceiro.WEB
 
             builder.RegisterType<ValidatorRunner>().As<IValidatorRunner>().SingleInstance();
             builder.RegisterType<CachedValidationRegistry>().As<IValidatorRegistry>().SingleInstance();
-            builder.Register<JsonResult>(j => new JsonResult()).InstancePerHttpRequest();
+            builder.Register<JsonResult>(j => new JsonResult());
             builder.Register(u => new Feedback()).InstancePerDependency();
 
             builder.RegisterType<CategoriaService>().As<ICategoriaService>();
 
-            builder.RegisterModule(new AutofacWebTypesModule());
-            builder.RegisterSource(new ViewRegistrationSource());
+            //builder.RegisterModule(new AutofacWebTypesModule());
+            //builder.RegisterSource(new ViewRegistrationSource());
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
@@ -123,10 +123,10 @@ namespace ControleFinanceiro.WEB
 
 
             Bundle.JavaScript()
-                .Add("~/Assets/frameworks/main/jquery-1.8.0.min.js")
-                .Add("~/Assets/frameworks/main/jquery-ui-1.8.23.min.js")
-                .Add("~/Assets/frameworks/main/jquery.validate.min.js")
-                .Add("~/Assets/frameworks/main/modernizr-2.5.3.js")
+                .AddMinified("~/Assets/frameworks/main/jquery-1.9.1.min.js")
+                .AddMinified("~/Assets/frameworks/main/jquery-ui-1.10.2.min.js")
+                .AddMinified("~/Assets/frameworks/main/jquery.validate.min.js")
+                .Add("~/Assets/frameworks/main/modernizr-2.6.2.js")
                 .Add("~/Assets/frameworks/bootstrap/js/bootstrap.min.js")
                 .Add("~/Assets/frameworks/spin/spin.js")
                 .Add("~/Assets/frameworks/offtmp/jquery.offtmp.js")
@@ -134,10 +134,15 @@ namespace ControleFinanceiro.WEB
                 .AsCached("CombinedJS", "~/Assets/Js/CombinedJS");
             
             Bundle.JavaScript()
+                .AddRemote("~/Assets/customScripts", "/Static/extends/GlobalExtends.js")
+                .AddRemote("~/Assets/customScripts", "/Static/resources/GlobalsResource.js")
+                .AddRemote("~/Assets/customScripts", "/Static/resources/LabelsResource.js")
+                .AddRemote("~/Assets/customScripts", "/Static/resources/MessagesResource.js")
                 .Add("/Assets/customScripts/Global.js")
                 .Add("/Assets/customScripts/Master.js")
                 .Add("/Assets/customScripts/AccountSignIn.js")
                 .ForceRelease()
+                .WithDeferredLoad()
                 .AsCached("CombinedJS2", "~/Assets/Js/CombinedJS2");
         }
 
